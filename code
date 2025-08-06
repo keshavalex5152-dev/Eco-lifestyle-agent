@@ -1,0 +1,45 @@
+
+---
+
+## **2. Basic Python Code for Eco Lifestyle Agent**
+
+```python
+# eco_agent.py
+import datetime
+
+def get_daily_data():
+    print("\n🌱 Welcome to Eco Lifestyle Agent 🌱")
+    transport = input("How did you travel today? (car/bike/bus/walk): ").strip().lower()
+    diet = input("What was your main meal? (meat/vegetarian/vegan): ").strip().lower()
+    electricity = float(input("How many kWh of electricity did you use today?: "))
+    water = float(input("How many liters of water did you use today?: "))
+    return transport, diet, electricity, water
+
+def calculate_impact(transport, diet, electricity, water):
+    # Basic carbon footprint estimates (kg CO2)
+    transport_emissions = {"car": 4.6, "bike": 0.0, "bus": 1.8, "walk": 0.0}
+    diet_emissions = {"meat": 7.2, "vegetarian": 3.0, "vegan": 2.0}
+    
+    carbon_footprint = (
+        transport_emissions.get(transport, 0) +
+        diet_emissions.get(diet, 0) +
+        (electricity * 0.5) +  # electricity CO2 factor
+        (water * 0.0003)       # water CO2 factor
+    )
+    return round(carbon_footprint, 2)
+
+def give_suggestions(carbon_footprint):
+    print(f"\n🌍 Your estimated carbon footprint today: {carbon_footprint} kg CO2")
+    if carbon_footprint > 10:
+        print("⚠️ High footprint! Try walking, biking, or using public transport more often.")
+    elif carbon_footprint > 5:
+        print("🙂 Moderate footprint. Consider reducing meat consumption and saving electricity.")
+    else:
+        print("✅ Great job! You're living a low-carbon lifestyle today.")
+
+    print("\n💡 Eco Tip: Turn off appliances when not in use to save electricity.")
+
+if __name__ == "__main__":
+    transport, diet, electricity, water = get_daily_data()
+    carbon_footprint = calculate_impact(transport, diet, electricity, water)
+    give_suggestions(carbon_footprint)
